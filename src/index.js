@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+let house = {
+  location:"New York,Brooklyn",
+  rooms:"6 rooms",
+  bath:"2 baths",
+  garage:'1 garage'
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <App house={house}/>
   </React.StrictMode>
 );
 
