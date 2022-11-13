@@ -44,7 +44,6 @@ let change = false
             {change? 
             <>
             <td><button onClick={()=>cancel(v.id)}>cancel</button></td>
-            <td><button onClick={()=>save(v.id)}>save</button></td>
             </>
             :
             <>
@@ -58,8 +57,26 @@ let change = false
           })
         }
         const push = ()=>{
+          let user = {
+            id:this.state.data.length+1,
+            name:this.state.name,
+            age:this.state.age,
+            address:this.state.address,
+            status:this.state.status,
+            nickname:this.state.nickname,
+            univ:this.state.univ,
+            job:this.state.job
+          }
           return (
-            this.state.data.push({id:this.state.data.length+1,name:this.state.name,age:this.state.age,address:this.state.address,status:this.state.status,nickname:this.state.nickname,univ:this.state.univ,job:this.state.job},()=>{this.setState({data:students})})
+            this.setState({data:[...this.state.data,user]}),
+            this.setState({name : "",
+            age : "",
+            address : "",
+            status : "",
+            nickname : "",
+            univ : "",
+            job : ""
+          })
           )
         }
         const delet =(id)=>{
@@ -80,13 +97,37 @@ let change = false
         const cancel = ()=>{
           this.setState({what:null})
         }
-        const save = (id)=>{
+        const save = (vi)=>{
+          let user = {
+            id:vi.id,
+            name:this.state.name,
+            age:this.state.age,
+            address:this.state.address,
+            status:this.state.status,
+            nickname:this.state.nickname,
+            univ:this.state.univ,
+            job:this.state.job
+          }
           this.state.data.filter((v)=>{
-            if(v.id === id){
-              this.state.data.push({id:v.id,name:this.state.name,age:this.state.age,address:this.state.address,status:this.state.status,nickname:this.state.nickname,univ:this.state.univ,job:this.state.job})
+            if(v.id === vi.id){
+              v.id = user.id
+              v.name = user.name
+              v.age = user.age
+              v.address = user.address
+              v.status = user.status
+              v.nickname = user.nickname
+              v.univ = user.univ
+              v.job = user.job
             }
-            return this.setState({data:students})
           })
+          this.setState({data:students},()=>{this.setState({name : "",
+          age : "",
+          address : "",
+          status : "",
+          nickname : "",
+          univ : "",
+          job : ""
+        })})
         }
         return(
           <div>
@@ -115,7 +156,11 @@ let change = false
               <input value={this.state.nickname} name='nickname' onChange={onChange} type="text" placeholder='nickname'/>
               <input value={this.state.univ} name='univ' onChange={onChange} type="text" placeholder='univ'/>
               <input value={this.state.job} name='job' onChange={onChange} type="text" placeholder='job'/>
-              <button onClick={push}>Save</button>
+              {change?
+              <button onClick={()=>save(this.state.what)}>Save</button>
+              :
+              <button onClick={push}>ADD</button>
+              }
             </div>
           </div>
         )
